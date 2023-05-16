@@ -36,7 +36,12 @@ resource "aws_iam_policy" "iam_policy_for_lambda" {
      ],
      "Resource": "arn:aws:logs:*:*:*",
      "Effect": "Allow"
-   }
+   },
+   {
+      "Action": "sns:*",
+      "Resource": "*",
+      "Effect": "Allow"
+    }
  ]
 }
 EOF

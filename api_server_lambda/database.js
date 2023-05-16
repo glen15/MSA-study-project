@@ -19,20 +19,20 @@ const connectDb = async (req, res, next) => {
     }
 }
 
-const getProduct = (sku) => `
-  SELECT BIN_TO_UUID(product_id) as product_id, name, price, stock, BIN_TO_UUID(factory_id), BIN_TO_UUID(ad_id)
-  FROM product
-  WHERE sku = "${sku}"
+const getItems = (name) => `
+  SELECT *
+  FROM items
+  WHERE name = "${name}"
 `
 
-const setStock = (productId, stock) => `
-  UPDATE product SET stock = ${stock} WHERE product_id = UUID_TO_BIN('${productId}')
+const setQuantity = (item_id, quantity) => `
+  UPDATE product SET quantity = ${quantity} WHERE item_id = '${item_id}')
 `
 
 module.exports = {
     connectDb,
     queries: {
-        getProduct,
-        setStock
+        getItems,
+        setQuantity
     }
 }
