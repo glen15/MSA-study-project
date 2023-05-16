@@ -12,6 +12,6 @@ echo "SQS queue created with URL: $queue_url"
 
 # SNS SQS 구독 연결은 콘솔에서 수동 생성
 
-# Topic Arn 기록
-echo "{\"topicArn\": \"$topic_arn\"}" > topic-arn.json
-echo "topic-arn.json file created with topicArn: $topic_arn"
+# shop api .env에 Topic Arn 기록
+echo "TOPIC_ARN=$topic_arn" >> ../shop-api-lambda/.env
+echo "Value from topic-arn.json added to .env file: TOPIC_ARN=$topic_arn"

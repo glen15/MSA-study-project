@@ -16,13 +16,15 @@ CREATE TABLE items (
 );
 
 -- 샘플 데이터 입력
+INSERT INTO factories (name, locate)
+VALUES
+    ('Factory1', 'korea'),
+    ('Factory2', 'usa');
+    
 INSERT INTO items (name, price, quantity, factory_id)
 VALUES
     ('Item1', 10000, 1, 1),
     ('Item2', 20000, 2, 2),
     ('Item3', 30000, 3, 1);
 
-INSERT INTO factories (name, locate)
-VALUES
-    ('Factory1', 'korea'),
-    ('Factory2', 'usa');
+
