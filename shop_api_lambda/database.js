@@ -19,10 +19,10 @@ const connectDb = async (req, res, next) => {
     }
 }
 
-const getItems = (name) => `
+const getItem = (id) => `
   SELECT *
   FROM items
-  WHERE name = "${name}"
+  WHERE item_id = "${id}"
 `
 
 const setQuantity = (item_id, quantity) => `
@@ -32,7 +32,7 @@ const setQuantity = (item_id, quantity) => `
 module.exports = {
     connectDb,
     queries: {
-        getItems,
+        getItem,
         setQuantity
     }
 }
