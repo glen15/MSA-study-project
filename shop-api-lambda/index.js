@@ -78,6 +78,20 @@ app.post("/item", connectDb, async (req, res, next) => {
   }
 });
 
+app.put("/item/:id", connectDb, async (req, res, next) => {
+  const item_id = req.params.id
+  const quentity = 3
+  const [result] = await req.conn.query(
+    setQuantity(item_id, quentity)
+  )
+  await req.conn.end()
+  if (result.length > 0) {
+    return res.status(200).json(result[0]);
+  } else {
+    return res.status(400).json({ message: "수량 셋팅 실패" });
+  }
+});
+
 app.use((req, res, next) => {
   return res.status(404).json({
     error: "Not Found",
