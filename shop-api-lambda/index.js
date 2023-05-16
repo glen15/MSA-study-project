@@ -19,9 +19,10 @@ app.get("/item", connectDb, async (req, res, next) => {
   const [result] = await req.conn.query(
     getItems()
   )
+  console.log(`아이템 목록 : ${JSON.stringify(result)}`)
   await req.conn.end()
   if (result.length > 0) {
-    return res.status(200).json(result[0]);
+    return res.status(200).json(result);
   } else {
     return res.status(400).json({ message: "상품 없음" });
   }
@@ -31,14 +32,14 @@ app.post("/item", connectDb, async (req, res, next) => {
   const [result] = await req.conn.query(
     getOneItem(req.body.item_name)
   )
-  console.log(`확인한 아이템 정보 : ${result}`);
+  console.log(`확인한 아이템 정보 : ${JSON.stringify(result)}`);
   if (result.length > 0) {
     const item = result[0]
-    console.log(`수량확인 : ${typeof req.body.quentity}, ${req.body.quentity}`);
-    console.log(item.quentity > 0 && item.quentity > req.body.quentity)
-    if (item.quentity > 0 && item.quentity > req.body.quentity) {
-      await req.conn.query(setStock(item.id, item.quentity - 1))
-      return res.status(200).json({ message: `구매 완료! 남은 재고: ${item.quentity - 1}` });
+    console.log(`수량확인 : ${typeof req.body.quantity}, ${req.body.quantity}`);
+    console.log(item.quantity > 0 && item.quantity > req.body.quantity)
+    if (item.quantity > 0 && item.quantity > req.body.quantity) {
+      await req.conn.query(setQuantity(item.item_id, item.quantity - 1))
+      return res.status(200).json({ message: `구매 완료! 남은 재고: ${item.quantity - 1}` });
     }
     else {
       await req.conn.end()
@@ -48,16 +49,16 @@ app.post("/item", connectDb, async (req, res, next) => {
         Message: message,
         Subject: `${item.name} 재고 부족`,
         MessageAttributes: {
-          MessageAttributeProductId: {
-            StringValue: item.id,
+          MessageAttributeItemId: {
+            StringValue: `${item.item_id}`,
             DataType: "Number",
           },
           MessageAttributeFactoryId: {
-            StringValue: item.factory_id,
+            StringValue: `${item.factory_id}`,
             DataType: "Number",
           },
-          MessageAttributeProductCnt: {
-            StringValue: req.body.quentity,
+          MessageAttributeItemCnt: {
+            StringValue: `${req.body.quantity}`,
             DataType: "Number",
           },
           MessageAttributeRequester: {
@@ -70,7 +71,7 @@ app.post("/item", connectDb, async (req, res, next) => {
       }
       console.log("보내는 메시지 결과물  : ", params)
       await sns.publish(params).promise()
-      return res.status(200).json({ message: `구매 실패! 남은 재고: ${item.quentity}, 생산요청 진행중` });
+      return res.status(200).json({ message: `구매 실패! 남은 재고: ${item.quantity}, 생산요청 진행중` });
     }
   } else {
     await req.conn.end()
@@ -80,13 +81,13 @@ app.post("/item", connectDb, async (req, res, next) => {
 
 app.put("/item/:id", connectDb, async (req, res, next) => {
   const item_id = req.params.id
-  const quentity = 3
+  const quantity = req.body.quantity
   const [result] = await req.conn.query(
-    setQuantity(item_id, quentity)
+    setQuantity(item_id, quantity)
   )
   await req.conn.end()
   if (result.length > 0) {
-    return res.status(200).json(result[0]);
+    return res.status(200).json(result);
   } else {
     return res.status(400).json({ message: "수량 셋팅 실패" });
   }
