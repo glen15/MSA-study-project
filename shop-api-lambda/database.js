@@ -21,17 +21,17 @@ const connectDb = async (req, res, next) => {
 
 const getItems = () => `
   SELECT *
-  FROM items
+  FROM items;
 `
 
 const getOneItem = (item_name) => `
   SELECT *
   FROM items
-  WHERE name = '${item_name}'
+  WHERE name = '${item_name}';
 `
 
 const setQuantity = (item_id, quantity) => `
-  UPDATE items SET quantity = ${quantity} WHERE item_id = '${item_id}')
+  UPDATE items SET quantity = ${quantity} WHERE item_id = ${item_id};
 `
 
 module.exports = {

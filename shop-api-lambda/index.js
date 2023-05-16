@@ -37,7 +37,9 @@ app.post("/item", connectDb, async (req, res, next) => {
     const item = result[0]
     console.log(`수량확인 : ${typeof req.body.quantity}, ${req.body.quantity}`);
     console.log(item.quantity > 0 && item.quantity > req.body.quantity)
-    if (item.quantity > 0 && item.quantity > req.body.quantity) {
+
+    //남은 재고가 0또는 0이하가 될 경우 생산 진행
+    if (item.quantity > 0 && item.quantity >= req.body.quantity) {
       await req.conn.query(setQuantity(item.item_id, item.quantity - 1))
       return res.status(200).json({ message: `구매 완료! 남은 재고: ${item.quantity - 1}` });
     }
