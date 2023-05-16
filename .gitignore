@@ -6,3 +6,5 @@ node_modules
 package-lock.json
 *.zip
 .env
+connect_data.json
+variables.tf
