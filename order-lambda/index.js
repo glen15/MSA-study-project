@@ -25,7 +25,7 @@ const consumer = async (event) => {
         `https://26gbu958zb.execute-api.ap-northeast-2.amazonaws.com/log`,
         payload
       );
-      console.log(`공장에서 온 응답 : ${response.data}`);
+      console.log(`공장에서 온 응답 : ${JSON.stringify(response.data)}`);
     } catch (error) {
       console.error(error);
     }
