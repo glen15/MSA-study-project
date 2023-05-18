@@ -20,7 +20,7 @@ app.get("/log", connectDb, async (req, res, next) => {
   )
   await req.conn.end()
   if (result.length > 0) {
-    return res.status(200).json(result);
+    return res.status(200).json(result[0]);
   } else {
     return res.status(400).json({ message: "기록 없음" });
   }
