@@ -7,7 +7,7 @@ provider:
   region: ap-northeast-2
 
 functions:
-  producer:
+  consumer:
     handler: index.consumer
     events:
       - sqs: arn:aws:sqs:ap-northeast-2:807207935784:order-queue

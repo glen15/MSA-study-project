@@ -1,26 +1,30 @@
 const axios = require('axios').default
 const consumer = async (event) => {
   for (const record of event.Records) {
-    const json = JSON.parse(record.body).MessageAttributes
-    console.log(json);
-    // const payload = {
-    //   "MessageGroupId": "stock-arrival-group",
-    //   "MessageAttributeProductId": json.MessageAttributeProductId.Value,
-    //   "MessageAttributeProductCnt": json.MessageAttributeProductCnt.Value,
-    //   "MessageAttributeFactory_identifier": json.MessageAttributeFactoryId.Value,
-    //   "MessageAttributeRequester": json.MessageAttributeRequester.Value,
-    //   "CallbackUrl": "https://9ckxfwlrda.execute-api.ap-northeast-2.amazonaws.com/product/donut"
-    // }
+    const json = JSON.parse(record.body).MessageAttributes;
+    console.log(`도착 데이터 : ${json}`);
 
-    // try {
-    //   const response = await axios.post(
-    //     `http://project3-factory.coz-devops.click/api/manufactures`,
-    //     payload
-    //   );
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    const requester = json.MessageAttributeRequester.Value;
+    const quantity = Number(json.MessageAttributeItemCnt.Value);
+    const item_id = Number(json.MessageAttributeItemId.Value);
+    const factory_id = Number(json.MessageAttributeFactoryId.Value);
+
+    const payload = {
+      "requester": requester,
+      "quantity": quantity,
+      "item_id": item_id,
+      "factory_id": factory_id
+    }
+
+    try {
+      const response = await axios.post(
+        `factory lambda api 주소`,
+        payload
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
 
