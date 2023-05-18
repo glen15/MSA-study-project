@@ -34,12 +34,12 @@ app.post("/log", connectDb, async (req, res, next) => {
   console.log("생산 시작합니다.")
   console.log("생산 품목: ", item_id, item_name)
   console.log("생산 공장: ", factory_id, factory_name)
-  console.log("생산 수량: ", quantity)
+  console.log("생산 수량: ", quantity * 2, "주문수량의 두배")
   console.log("생산 요청자: ", requester)
   console.log("생산 완료 후 item db quantity 증가 람다 주소 : ", callbackUrl)
 
   await req.conn.query(
-    recordLog(factory_id, factory_name, item_id, item_name, quantity, requester)
+    recordLog(factory_id, factory_name, item_id, item_name, quantity * 2, requester)
   );
   await req.conn.end();
   console.log("데이터베이스에 생산요청 기록 완료");
@@ -55,7 +55,7 @@ app.post("/log", connectDb, async (req, res, next) => {
         DataType: "Number",
       },
       MessageAttributeItemCnt: {
-        StringValue: `${quantity}`,
+        StringValue: `${quantity * 2}`,
         DataType: "Number",
       }
     },
