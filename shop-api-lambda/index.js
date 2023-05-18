@@ -36,8 +36,10 @@ app.post("/item", connectDb, async (req, res, next) => {
   console.log(`확인한 아이템 정보 : ${JSON.stringify(result)}`);
   if (result.length > 0) {
     const item = result[0]
-    const factory_name = getFactoryName(item.factory_id);
-    console.log(`아이템 정보 : ${item}`);
+    const [factory_name] = await req.conn.query(
+      getFactoryName(item.factory_id)
+    );
+    console.log(`아이템 정보 : ${JSON.stringify(item)}`);
     console.log(`공장이름 : ${factory_name}`);
 
     //남은 재고가 0또는 0이하가 될 경우 생산 진행
