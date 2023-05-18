@@ -17,7 +17,7 @@
 
 ## 테스트 순서
 
-### 1. 데이터베이스 구성
+### 1. terraform을 이용한 데이터베이스 구성
   - 경로 이동 : `cd terraform_db` 
   - variables.tf에서 데이터베이스 액세스 정보 설정
   - `terrafom init`, `terraform apply`
@@ -44,11 +44,21 @@
       | log_id | factory_id | factory_name | item_id | item_name | quantity | requester | datetime            |
       |--------|------------|--------------|---------|-----------|----------|-----------|---------------------|
       |      1 |          1 | Factory1     |       1 | Item1     |        5 | jeonghun  | 2023-05-18 09:46:48 |
-
-2. aws cli를 통해 sqs, sns 생성
-  - SNS SQS 구독 연결은 콘솔에서 수동 생성
-  - shop api .env에 Topic Arn 기록
-3. serverless framework를 이용해서 람다 생성
+---
+### 2. aws cli를 이용한 SNS & SQS 생성 생성
+  - 경로 이동 : `cd aws_cli_sqs_sns`
+  - 실행 권한 부여 : `chmod +x sns_sqs.sh` 
+  - 스크립트 실행 : `./sns_sqs.sh`
+    ```
+    SNS order-topic created with ARN: $your_arn 
+    SQS order-queue created with URL: $your_url
+    SNS delivery-topic created with ARN: $your_arn 
+    SQS delivery-queue created with URL: $your_url
+    Value from topic-arn.json added to .env file: TOPIC_ARN=$your_arn 
+    Value from topic-arn.json added to .env file: TOPIC_ARN=$your_arn 
+    ```
+  - AWS 콘솔에서 SNS-SQS 구독연결
+### 3. serverless framework를 이용해서 람다 생성
   - shop-api-lambda 생성
   - 콘솔에서 shop-api-lambda-dev-ap-northeast-2-lambdaRole에 SNS Publish 추가
 
