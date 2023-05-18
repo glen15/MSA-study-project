@@ -151,3 +151,8 @@
       }
     ] 
   ```
+---
+### 6. serverless framework를 이용한 delivery-lambda 생성
+- 경로 이동 : `cd delivery-lambda`
+- 디펜던시 설치 : `npm install`
+- 배포 : `sls deploy`
