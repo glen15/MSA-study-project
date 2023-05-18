@@ -1,7 +1,7 @@
 # MSA-study-project
 
 ## 아키텍처
-이미지 넣을 것,
+![아키텍처](https://github.com/glen15/MSA-study-project/blob/main/msa-project.png?raw=true)
 
 ---
 
