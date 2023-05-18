@@ -1,4 +1,3 @@
-const axios = require('axios').default
 const serverless = require("serverless-http");
 require('dotenv').config()
 const express = require("express");
@@ -28,6 +27,7 @@ app.get("/log", connectDb, async (req, res, next) => {
 );
 
 app.post("/log", connectDb, async (req, res, next) => {
+  console.log(`받은 데이터 :  ${JSON.stringify(req.body.payload)}`);
   const { requester, quantity, item_id, item_name, factory_id, factory_name } = req.body.payload;
   const callbackUrl = "Delivery 람다 주소"
 
