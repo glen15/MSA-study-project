@@ -52,7 +52,6 @@
 - 경로 이동 : `cd aws_cli_sqs_sns`
 - 실행 권한 부여 : `chmod +x sns_sqs.sh` 
 - 스크립트 실행 : `./sns_sqs.sh`
-
     ```
     SNS order-topic created with ARN: $your_arn 
     SQS order-queue created with URL: $your_url
@@ -69,7 +68,6 @@
 - 디펜던시 설치 : `npm install`
 - 배포 : `sls deploy`
 - IAM 권한 부여
-
     ```
       {
         "Version": "2012-10-17",
@@ -83,6 +81,33 @@
         ]
       }
     ```
+- shop-lambda 테스트 : `curl -X GET your-shop-lambda-url/item`
+  ```
+  [
+      {
+          "item_id": 1,
+          "name": "Item1",
+          "price": 10000,
+          "quantity": 1,
+          "factory_id": 1
+      },
+      {
+          "item_id": 2,
+          "name": "Item2",
+          "price": 20000,
+          "quantity": 2,
+          "factory_id": 2
+      },
+      {
+          "item_id": 3,
+          "name": "Item3",
+          "price": 30000,
+          "quantity": 3,
+          "factory_id": 1
+      }
+  ]
+  ```
+  
 ---
 ### 4. serverless framework를 이용한 order-lambda 생성
 - 경로 이동 : `cd order-lambda`
@@ -90,4 +115,39 @@
 - 배포 : `sls deploy`
 - factory-lambda url 설정 : 5. factory-lambda 생성 후 환경변수로 입력
 ---
-
+### 5. serverless framework를 이용한 factory-lambda 생성
+- 경로 이동 : `cd factory-lambda`
+- 디펜던시 설치 : `npm install`
+- 배포 : `sls deploy`
+- IAM 권한 부여
+    ```
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "VisualEditor0",
+                "Effect": "Allow",
+                "Action": "sns:Publish",
+                "Resource": "your_topic_arn"
+            }
+        ]
+      }
+    ```
+- order-lambda의 .env에 facotry-lambda url 설정
+  `FACTORY_URL=your-factory-lambda-url/log`
+- order-lambda 재배포 : `cd orderlmabda`, `sls deploy`
+- factory-lambda 테스트 : `curl -X GET your-factory-lambda-url/log`
+  ```
+    [
+      {
+          "log_id": 1,
+          "factory_id": 1,
+          "factory_name": "Factory1",
+          "item_id": 1,
+          "item_name": "Item1",
+          "quantity": 5,
+          "requester": "jeonghun",
+          "datetime": "2023-05-18T09:46:48.000Z"
+      }
+    ] 
+  ```
