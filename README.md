@@ -58,7 +58,7 @@
     Value from topic-arn.json added to .env file: TOPIC_ARN=$your_arn 
     ```
   - AWS 콘솔에서 SNS-SQS 구독연결
-### 3. serverless framework를 이용해서 람다 생성
-  - shop-api-lambda 생성
+### 3. serverless framework를 이용한 shop api 생성
+  - 경로 이동 : `cd shop-api-lambda`
   - 콘솔에서 shop-api-lambda-dev-ap-northeast-2-lambdaRole에 SNS Publish 추가
 
