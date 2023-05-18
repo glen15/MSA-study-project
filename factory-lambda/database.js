@@ -19,7 +19,7 @@ const connectDb = async (req, res, next) => {
     }
 }
 const getLog = () => `
-SELECT * FROM productionLog;
+SELECT * FROM logs;
 `
 
 const recordLog = (productId, identifier, stock, requester) => `
