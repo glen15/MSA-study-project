@@ -1,4 +1,4 @@
-service: shop-api-lambda
+service: shop-lambda
 frameworkVersion: "3"
 
 provider:
