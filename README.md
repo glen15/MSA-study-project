@@ -88,3 +88,6 @@
 - 경로 이동 : `cd order-lambda`
 - 디펜던시 설치 : `npm install`
 - 배포 : `sls deploy`
+- factory-lambda url 설정 : 5. factory-lambda 생성 후 환경변수로 입력
+---
+
