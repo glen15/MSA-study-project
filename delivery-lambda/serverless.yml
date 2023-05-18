@@ -1,0 +1,16 @@
+service: delivery-lambda
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2
+
+functions:
+  consumer:
+    handler: index.consumer
+    events:
+      - sqs: arn:aws:sqs:ap-northeast-2:807207935784:delivery-queue
+
+plugins:
+  - serverless-lift

@@ -1,0 +1,14 @@
+{
+  "name": "delivery-lambda",
+  "version": "1.0.0",
+  "description": "Serverless Framework Node SQS Producer-Consumer on AWS",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-lift": "^1.1.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.3.1"
+  }
+}
