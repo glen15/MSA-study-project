@@ -2,7 +2,7 @@ const axios = require('axios').default
 const consumer = async (event) => {
   for (const record of event.Records) {
     const json = JSON.parse(record.body).MessageAttributes;
-    console.log(`도착 데이터 : ${json}`);
+    console.log(`도착 데이터 : ${JSON.stringify(json)}`);
 
     const requester = json.MessageAttributeRequester.Value;
     const quantity = Number(json.MessageAttributeItemCnt.Value);
@@ -15,7 +15,7 @@ const consumer = async (event) => {
       "item_id": item_id,
       "factory_id": factory_id
     }
-
+    console.log(`payload : ${JSON.stringify(payload)}`);
     try {
       const response = await axios.post(
         `factory lambda api 주소`,
