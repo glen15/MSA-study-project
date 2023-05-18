@@ -6,9 +6,10 @@ CREATE TABLE logs (
     item_id INT,
     item_name VARCHAR(255),
     quantity INT,
-    requester VARCHAR(255)
+    requester VARCHAR(255),
+    datetime DATETIME
 );
 
 -- 샘플 데이터 입력
-INSERT INTO logs (factory_id, factory_name, item_id, item_name, quantity, requester)
-VALUES (1, 'Factory1', 1, 'Item1', 5, 'jeonghun');
+INSERT INTO logs (factory_id, factory_name, item_id, item_name, quantity, requester, datetime)
+VALUES (1, 'Factory1', 1, 'Item1', 5, 'jeonghun', NOW());

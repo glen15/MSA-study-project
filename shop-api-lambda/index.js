@@ -12,7 +12,7 @@ const sns = new AWS.SNS({ region: "ap-northeast-2" })
 
 const {
   connectDb,
-  queries: { getItems, getOneItem, setQuantity }
+  queries: { getItems, getOneItem, setQuantity, getFactoryName }
 } = require('./database')
 
 app.get("/item", connectDb, async (req, res, next) => {
@@ -32,11 +32,13 @@ app.post("/item", connectDb, async (req, res, next) => {
   const [result] = await req.conn.query(
     getOneItem(req.body.item_name)
   )
+
   console.log(`확인한 아이템 정보 : ${JSON.stringify(result)}`);
   if (result.length > 0) {
     const item = result[0]
-    console.log(`수량확인 : ${typeof req.body.quantity}, ${req.body.quantity}`);
-    console.log(item.quantity > 0 && item.quantity > req.body.quantity)
+    const factory_name = getFactoryName(item.factory_id);
+    console.log(`아이템 정보 : ${item}`);
+    console.log(`공장이름 : ${factory_name}`);
 
     //남은 재고가 0또는 0이하가 될 경우 생산 진행
     if (item.quantity > 0 && item.quantity >= req.body.quantity) {
@@ -55,9 +57,17 @@ app.post("/item", connectDb, async (req, res, next) => {
             StringValue: `${item.item_id}`,
             DataType: "Number",
           },
+          MessageAttributeItemName: {
+            StringValue: item.name,
+            DataType: "String",
+          },
           MessageAttributeFactoryId: {
             StringValue: `${item.factory_id}`,
             DataType: "Number",
+          },
+          MessageAttributeFactoryName: {
+            StringValue: factory_name,
+            DataType: "String",
           },
           MessageAttributeItemCnt: {
             StringValue: `${req.body.quantity}`,
