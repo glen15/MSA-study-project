@@ -159,4 +159,16 @@
 ---
 
 ## 시스템 테스트
-- POST shop-lambda-url/item
+### 구매 요청으로 재고 없음 상태를 만들고, 생산 시간을 기다린 후 재 구매 요청
+- request
+  ```
+    curl -X POST -H "Content-Type: application/json" -d '{
+      "item_name": "Item2",
+      "quantity": 5,
+      "requester": "jeonghun"
+    }' https://qktwji4sn7.execute-api.ap-northeast-2.amazonaws.com/item
+  ```
+- response
+  - 재고 있을 때 : `{"message":"구매 완료! 남은 재고: 2"}% `
+  - 재고 없을 때 : `{"message":"구매 실패! 남은 재고: 2, 생산요청 진행중"}%`
+  - 생산 시간 대기 후 다시 구매요청
