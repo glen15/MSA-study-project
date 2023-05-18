@@ -33,12 +33,12 @@ app.post("/item", connectDb, async (req, res, next) => {
     getOneItem(req.body.item_name)
   )
 
-  console.log(`확인한 아이템 정보 : ${JSON.stringify(result)}`);
   if (result.length > 0) {
     const item = result[0]
-    const [factory_name] = await req.conn.query(
+    const [factory_data] = await req.conn.query(
       getFactoryName(item.factory_id)
     );
+    const factory_name = factory_data[0].name;
     console.log(`아이템 정보 : ${JSON.stringify(item)}`);
     console.log(`공장이름 : ${factory_name}`);
 
