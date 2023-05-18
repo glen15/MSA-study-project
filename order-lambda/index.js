@@ -5,7 +5,7 @@ const consumer = async (event) => {
     console.log(`도착 데이터 : ${JSON.stringify(json)}`);
 
     const requester = json.MessageAttributeRequester.Value;
-    const quantity = Number(json.MessageAttributeItemCnt.Value);
+    const quantity = Number(json.MessageAttributeItemCnt.Value) * 2;
     const item_id = Number(json.MessageAttributeItemId.Value);
     const item_name = json.MessageAttributeItemName.Value;
     const factory_id = Number(json.MessageAttributeFactoryId.Value);
