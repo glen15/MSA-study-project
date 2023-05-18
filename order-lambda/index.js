@@ -1,4 +1,6 @@
 const axios = require('axios').default
+require('dotenv').config()
+
 const consumer = async (event) => {
   for (const record of event.Records) {
     const json = JSON.parse(record.body).MessageAttributes;
@@ -20,9 +22,10 @@ const consumer = async (event) => {
       "factory_name": factory_name
     }
     console.log(`payload : ${JSON.stringify(payload)}`);
+    console.log(`factory lambda url : ${process.env.FACTORY_URL}`);
     try {
       const response = await axios.post(
-        `https://26gbu958zb.execute-api.ap-northeast-2.amazonaws.com/log`,
+        `${process.env.FACTORY_URL}`,
         payload
       );
       console.log(`공장에서 온 응답 : ${JSON.stringify(response.data)}`);

@@ -85,4 +85,6 @@
     ```
 ---
 ### 4. serverless framework를 이용한 order-lambda 생성
-- 
+- 경로 이동 : `cd order-lambda`
+- 디펜던시 설치 : `npm install`
+- 배포 : `sls deploy`
