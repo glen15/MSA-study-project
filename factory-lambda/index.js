@@ -34,7 +34,7 @@ app.post("/log", connectDb, async (req, res, next) => {
   console.log("생산 시작합니다.")
   console.log("생산 품목: ", item_id, item_name)
   console.log("생산 공장: ", factory_id, factory_name)
-  console.log("생산 수량: ", quantity * 2, "주문수량의 두배")
+  console.log("생산 수량: ", quantity)
   console.log("생산 요청자: ", requester)
   console.log("생산 완료 후 item db quantity 증가 람다 주소 : ", callbackUrl)
 
@@ -55,7 +55,7 @@ app.post("/log", connectDb, async (req, res, next) => {
         DataType: "Number",
       },
       MessageAttributeItemCnt: {
-        StringValue: `${quantity * 2}`,
+        StringValue: `${quantity}`,
         DataType: "Number",
       }
     },
