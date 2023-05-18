@@ -51,8 +51,8 @@ app.post("/log", connectDb, async (req, res, next) => {
     Subject: '수량 증가 요청',
     MessageAttributes: {
       MessageAttributeItemId: {
-        StringValue: item_id,
-        DataType: "String",
+        StringValue: `${item_id}`,
+        DataType: "Number",
       },
       MessageAttributeItemCnt: {
         StringValue: `${quantity}`,
