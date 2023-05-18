@@ -68,7 +68,6 @@ app.post("/item", connectDb, async (req, res, next) => {
             DataType: "String",
           }
         },
-
         TopicArn: process.env.TOPIC_ARN
       }
       console.log("보내는 메시지 결과물  : ", params)
@@ -87,9 +86,10 @@ app.put("/item/:id", connectDb, async (req, res, next) => {
   const [result] = await req.conn.query(
     setQuantity(item_id, quantity)
   )
+
   await req.conn.end()
-  if (result.length > 0) {
-    return res.status(200).json(result);
+  if (result) {
+    return res.status(200).json({ message: "수량 변경 완료", result });
   } else {
     return res.status(400).json({ message: "수량 셋팅 실패" });
   }
