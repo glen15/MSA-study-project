@@ -22,7 +22,7 @@ const consumer = async (event) => {
     console.log(`payload : ${JSON.stringify(payload)}`);
     try {
       const response = await axios.post(
-        `factory lambda api 주소`,
+        `https://26gbu958zb.execute-api.ap-northeast-2.amazonaws.com/log`,
         payload
       );
       console.log(response.data);
