@@ -27,8 +27,8 @@ app.get("/log", connectDb, async (req, res, next) => {
 );
 
 app.post("/log", connectDb, async (req, res, next) => {
-  console.log(`받은 데이터 :  ${JSON.stringify(req.body.payload)}`);
-  const { requester, quantity, item_id, item_name, factory_id, factory_name } = req.body.payload;
+  console.log(`받은 데이터 :  ${JSON.stringify(req.body)}`);
+  const { requester, quantity, item_id, item_name, factory_id, factory_name } = req.body;
   const callbackUrl = "Delivery 람다 주소"
 
   console.log("생산 시작합니다.")
