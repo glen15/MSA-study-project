@@ -156,3 +156,7 @@
 - 경로 이동 : `cd delivery-lambda`
 - 디펜던시 설치 : `npm install`
 - 배포 : `sls deploy`
+---
+
+## 시스템 테스트
+- POST shop-lambda-url/item
