@@ -15,13 +15,16 @@ const consumer = async (event) => {
 
     const quantity = Number(json.MessageAttributeItemCnt.Value);
     const item_id = Number(json.MessageAttributeItemId.Value);
-    console.log(`아이템 id, 수량 : ${item_id}, ${quantity}`);
     try {
       const connect = await mysql.createConnection({ host, user, password, database });
-      const result = await connect.query(`UPDATE items SET quantity = ${quantity} WHERE item_id = ${item_id};`);
-      console.log(`데이터베이스 쿼리 결과 : ${JSON.stringify(result)}`);
+      const [quantity_in_db] = await connect.query(`SELECT quantity from items WHERE item_id = ${item_id};`);
+      const quantity_before = quantity_in_db[0].quantity;
+      const total_quantity = quantity + quantity_before;
+      await connect.query(`UPDATE items SET quantity = ${total_quantity} WHERE item_id = ${item_id};`);
+      console.log(`배송완료 - item_id : ${item_id}, quantity: ${total_quantity}`);
+      connect.end();
     } catch (e) {
-      console.log(`데이터보에스 연결 오류 : ${e}`);
+      console.log(`데이터베이스 연결 오류 : ${e}`);
     }
   }
 };
