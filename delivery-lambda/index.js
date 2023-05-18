@@ -18,8 +18,8 @@ const consumer = async (event) => {
     console.log(`아이템 id, 수량 : ${item_id}, ${quantity}`);
     try {
       const connect = await mysql.createConnection({ host, user, password, database });
-      const result = connect.query(`UPDATE items SET quantity = ${quantity} WHERE item_id = ${item_id};`);
-      console.log(`데이터베이스 쿼리 결과 : ${result}`);
+      const result = await connect.query(`UPDATE items SET quantity = ${quantity} WHERE item_id = ${item_id};`);
+      console.log(`데이터베이스 쿼리 결과 : ${JSON.stringify(result)}`);
     } catch (e) {
       console.log(`데이터보에스 연결 오류 : ${e}`);
     }
