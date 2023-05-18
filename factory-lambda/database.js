@@ -22,8 +22,9 @@ const getLog = () => `
 SELECT * FROM logs;
 `
 
-const recordLog = (productId, identifier, stock, requester) => `
-INSERT INTO productionLog(productId, identifier, stock, requester, now) VALUES ('${productId}', '${identifier}', ${stock}, '${requester}', NOW());
+const recordLog = (factory_id, factory_name, item_id, item_name, quantity, requester) => `
+INSERT INTO logs(factory_id, factory_name, item_id, item_name, quantity, requester now)
+ VALUES ('${factory_id}', '${factory_name}', ${item_id}, '${item_name}', '${quantity}', '${requester}' NOW());
 `
 
 module.exports = {
