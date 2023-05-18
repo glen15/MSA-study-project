@@ -11,3 +11,8 @@ functions:
     handler: index.handler
     events:
       - httpApi: "*"
+    # iamRoleStatements:
+    # - Effect: Allow
+    # Action:
+    # - sns:Publish
+    # Resource: "arn:aws:sns:ap-northeast-2:123456789012:mySnsTopic"
